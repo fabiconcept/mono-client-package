@@ -49,25 +49,117 @@ client.getBankList()
     .catch(error => console.error('Error:', error));
 ```
 
-#### `customer.createCustomer(data: CreateCustomerRequest)`
+#### `customer.createCustomer.individual(data: IndividualCustomerRequest)`
 
-Create a new customer.
+Create a new individual customer.
 
 ```typescript
-const customerData = {
-    email: 'john.doe@example.com',
+const individualCustomerData = {
     identity: {
-        type: "bvn";
-        number: "1234567890";
-    };
-    firstName: "Abbie";
-    lastName: "Dustin";
-    address: "saw blanket firm keep";
-    phone: "1234567890";
+        type: "bvn",
+        number: "1234567890"
+    },
+    email: "john.doe@example.com",
+    type: "individual",
+    last_name: "Doe",
+    first_name: "John",
+    address: "123 Main St",
+    phone: "1234567890"
 };
 
-client.customer.createCustomer(customerData)
-    .then(response => console.log('Customer created:', response))
+client.customer.createCustomer.individual(individualCustomerData)
+    .then(response => console.log('Individual customer created:', response))
+    .catch(error => console.error('Error:', error));
+```
+
+#### `customer.createCustomer.business(data: BusinessCustomerRequest)`
+
+Create a new business customer.
+
+```typescript
+const businessCustomerData = {
+    identity: {
+        type: "bvn",
+        number: "1234567890"
+    },
+    email: "contact@business.com",
+    type: "business",
+    business_name: "My Business Ltd.",
+    address: "456 Business Rd",
+    phone: "0987654321"
+};
+
+client.customer.createCustomer.business(businessCustomerData)
+    .then(response => console.log('Business customer created:', response))
+    .catch(error => console.error('Error:', error));
+```
+
+#### `customer.getCustomer(customer_id: string)`
+
+Retrieve details of a specific customer by their ID.
+
+```typescript
+client.customer.getCustomer('customer-id')
+    .then(response => console.log('Customer data:', response))
+    .catch(error => console.error('Error:', error));
+```
+
+#### `customer.getAllCustomers(page: string, phone: string, email: string)`
+
+Retrieve a list of all customers with optional filters.
+
+```typescript
+client.customer.getAllCustomers("1", "1234567890", "john.doe@example.com")
+    .then(response => console.log('All customers:', response))
+    .catch(error => console.error('Error:', error));
+```
+
+#### `customer.getCustomerTransactions(customer_id: string, period: string, page: number)`
+
+Retrieve transactions for a specific customer.
+
+```typescript
+client.customer.getCustomerTransactions('customer-id', '2024-01', 1)
+    .then(response => console.log('Customer transactions:', response))
+    .catch(error => console.error('Error:', error));
+```
+
+#### `customer.getAllLinkedAccounts(page: string, account_number: string, name: string, institution: string)`
+
+Retrieve all linked accounts with optional filters.
+
+```typescript
+client.customer.getAllLinkedAccounts("1", "account-number", "John Doe", "Bank Name")
+    .then(response => console.log('Linked accounts:', response))
+    .catch(error => console.error('Error:', error));
+```
+
+#### `customer.updateCustomer(customer_id: string, body: UpdateCustomerDetails)`
+
+Update details of an existing customer.
+
+```typescript
+const updateCustomerData = {
+    identity: {
+        type: "bvn",
+        number: "1234567890"
+    },
+    address: "789 New Address St",
+    phone: "1122334455"
+};
+
+client.customer.updateCustomer('customer-id', updateCustomerData)
+    .then(response => console.log('Customer updated:', response))
+    .catch(error => console.error('Error:', error));
+```
+
+#### `customer.deleteCustomer(customer_id: string)`
+
+Delete a specific customer.
+
+```typescript
+client.customer.deleteCustomer('customer-id')
+    .then(response => console.log('Customer deleted:', response))
     .catch(error => console.error('Error:', error));
 ```
 

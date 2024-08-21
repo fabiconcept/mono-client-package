@@ -1,4 +1,4 @@
-interface Identity {
+export interface Identity {
     type: "bvn";
     number: number;
 }
