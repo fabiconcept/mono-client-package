@@ -1,6 +1,6 @@
 import { EndPoints } from "../lib/Enum";
-import { CreateCustomerRequest } from "../lib/Mono";
-import { BanksResponse, CreateCustomerResponse } from "../lib/Mono Api Responses";
+import { CreateCustomerRequest } from "../lib/interfaces/Mono";
+import { BanksResponse, CreateCustomerResponse } from "../lib/interfaces/Mono Api Responses";
 
 const MONO_BASE_URL = "https://api.withmono.com";
 
@@ -31,6 +31,8 @@ export default class MonoClient {
     async getBankList(): Promise<BanksResponse> {
         return this.request(EndPoints.GetBankList);
     }
+
+    public 
 
     public customer = {
         createCustomer: async (data: CreateCustomerRequest): Promise<CreateCustomerResponse> => {
