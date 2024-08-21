@@ -1,0 +1,43 @@
+{
+  "name": "mono-client",
+  "version": "1.0.0",
+  "description": "\"This package provides streamlined access to all Mono API endpoints, making it simple and efficient for developers to integrate Mono's services into their applications. Whether you're managing financial data, processing transactions, or handling user accounts, this package ensures a smooth and hassle-free experience with the Mono API.\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run build"
+  },
+  "keywords": [
+    "Mono",
+    "API",
+    "API",
+    "wrapper",
+    "Financial",
+    "data",
+    "Mono",
+    "integration",
+    "Node.js",
+    "JavaScript",
+    "TypeScript",
+    "API",
+    "client",
+    "Developer",
+    "tools",
+    "Fintech",
+    "Banking",
+    "API",
+    "API",
+    "endpoints",
+    "Financial",
+    "services",
+    "Easy",
+    "access",
+    "Mono",
+    "SDK"
+  ],
+  "author": "Favour Ajokubi",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^22.4.2",
+    "typescript": "^5.5.4"
+  }
+}
