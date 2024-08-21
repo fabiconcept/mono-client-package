@@ -14,11 +14,55 @@ const MONO_BASE_URL = "https://api.withmono.com";
 class MonoClient {
     constructor(MONO_SECRET_KEY) {
         this.customer = {
-            createCustomer: (data) => __awaiter(this, void 0, void 0, function* () {
-                return this.request(Enum_1.EndPoints.CreateCustomer, "POST", {
-                    data
+            createCustomer: {
+                individual: (data) => __awaiter(this, void 0, void 0, function* () {
+                    return this.request(Enum_1.EndPoints.Customer, "POST", {
+                        data
+                    });
+                }),
+                business: (data) => __awaiter(this, void 0, void 0, function* () {
+                    return this.request(Enum_1.EndPoints.Customer, "POST", {
+                        data
+                    });
+                }),
+            },
+            getCustomer: (customer_id) => __awaiter(this, void 0, void 0, function* () {
+                return this.request(`${Enum_1.EndPoints.Customer}${customer_id}`);
+            }),
+            getAllCustomers: (...args_1) => __awaiter(this, [...args_1], void 0, function* (page = "", phone = "", email = "") {
+                const queryParams = new URLSearchParams({
+                    email,
+                    phone,
+                    page
                 });
-            })
+                return this.request(`${Enum_1.EndPoints.Customer}?${queryParams.toString()}`);
+            }),
+            getCustomerTransactions: (customer_id, period, page) => __awaiter(this, void 0, void 0, function* () {
+                if (!period || page)
+                    throw new Error("Required fields: period & page");
+                const queryParams = new URLSearchParams({
+                    period,
+                    page: String(page)
+                });
+                return this.request(`${Enum_1.EndPoints.Customer}/${customer_id}/transactions?${queryParams.toString()}`);
+            }),
+            getAllLinkedAccounts: (...args_1) => __awaiter(this, [...args_1], void 0, function* (page = "", account_number = "", name = "", institution = "") {
+                const queryParams = new URLSearchParams({
+                    name,
+                    institution,
+                    account_number,
+                    page,
+                });
+                return this.request(`${Enum_1.EndPoints.AccountDetails}?${queryParams.toString()}`);
+            }),
+            updateCustomer: (customer_id, body) => __awaiter(this, void 0, void 0, function* () {
+                return this.request(`${Enum_1.EndPoints.Customer}${customer_id}`, "PATCH", {
+                    data: body
+                });
+            }),
+            deleteCustomer: (customer_id) => __awaiter(this, void 0, void 0, function* () {
+                return this.request(`${Enum_1.EndPoints.Customer}${customer_id}`, "DELETE");
+            }),
         };
         this.secretKey = MONO_SECRET_KEY;
     }
