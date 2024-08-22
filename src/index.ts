@@ -16,6 +16,8 @@ import { CreditWorthinessResponse } from "../lib/interfaces/Responses/Connect/Ac
 import { UnlinkResponse } from "../lib/interfaces/Responses/Connect/Account/unlink";
 import { StatementResponseJSON, StatementResponsePDF } from "../lib/interfaces/Responses/Connect/Account/statement";
 import { TransactionsResponse } from "../lib/interfaces/Responses/Connect/Account/transactions";
+import { AssetResponse } from "../lib/interfaces/Responses/investment/assets";
+import { EarningsResponse } from "../lib/interfaces/Responses/investment/earnings";
 
 const MONO_BASE_URL = "https://api.withmono.com";
 
@@ -194,6 +196,16 @@ export default class MonoClient {
                 })
                 return this.request(`${EndPoints.AccountDetails}/${id}/transactions?${params}`);
             },
+
+            investment: {
+                getAssets: async (id: string): Promise<AssetResponse> => { 
+                    return this.request(`${EndPoints.AccountDetails}/${id}/assets`);
+                },
+                
+                getEarnings: async (id: string): Promise<EarningsResponse> => { 
+                    return this.request(`${EndPoints.AccountDetails}/${id}/earnings`);
+                },
+            }
         }
     }
 }
