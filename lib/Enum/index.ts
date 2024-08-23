@@ -6,5 +6,13 @@ export enum EndPoints {
     Customer = `/v2/customers`,
     InitiateMandate = `/v2/payments/initiate`,
     Mandate = `/v3/payments/mandates`,
-    VerifyMandateOTP = `v3/payments/mandates/verify/otp`,
+    VerifyMandateOTP = `/v3/payments/mandates/verify/otp`,
+    Enrichment = `/v1/enrichments`,
+    CashFlow = `/accounts`,
+}
+
+export enum Status {
+    SUCCESSFUL = "successful",
+    FAILED = "failed",
+    PENDING = "pending"
 }

@@ -1,4 +1,4 @@
-export interface incomeResponse {
+export interface IncomeResponse {
     status: string,
     message: string,
     timestamp: string,
