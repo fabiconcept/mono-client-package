@@ -12,32 +12,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Enum_1 = require("../lib/Enum");
 const customer_1 = require("./methods/customer");
 const connect_1 = require("./methods/connect");
+const directPay_1 = require("./methods/directPay");
 const MONO_BASE_URL = "https://api.withmono.com";
 class MonoClient {
     constructor(MONO_SECRET_KEY) {
         this.secretKey = MONO_SECRET_KEY;
         this.connect = new connect_1.ConnectMethods(this.request.bind(this));
-        /**
-         * Initializes the `CustomerMethods` instance.
-         *
-         * This constructor binds the `request` method to the current context and passes it to the `CustomerMethods` class.
-         * The `CustomerMethods` class provides methods for interacting with the Mono API's customer-related endpoints.
-         *
-         * The `CustomerMethods` class allows you to:
-         * - Create new individual or business customers.
-         * - Retrieve customer details and lists.
-         * - Update and delete customer information.
-         * - Fetch customer transactions.
-         *
-         * For more information on the customer-related operations, refer to the [Mono API documentation](https://docs.mono.co/docs/customers).
-         *
-         * @example
-         * const client = new MonoClient('your-secret-key');
-         * const customerMethods = new CustomerMethods(client.request.bind(client));
-         *
-         * @type {CustomerMethods}
-         */
         this.customer = new customer_1.CustomerMethods(this.request.bind(this));
+        this.directPay = new directPay_1.DirectPayMethods(this.request.bind(this));
     }
     request(endpoint_1) {
         return __awaiter(this, arguments, void 0, function* (endpoint, method = 'GET', body) {

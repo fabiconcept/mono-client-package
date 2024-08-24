@@ -482,7 +482,7 @@ class ConnectMethods {
                     if (requestParams.limit) {
                         searchParams.set("limit", (_f = requestParams.limit.toString()) !== null && _f !== void 0 ? _f : "");
                     }
-                    return this.request(`${Enum_1.EndPoints.TelcoAccount}/${id}/transactions`);
+                    return this.request(`${Enum_1.EndPoints.TelcoAccount}/${id}/transactions?${searchParams}`);
                 }),
                 /**
                  * Retrieves the identity information of a TelCo account by its ID.
