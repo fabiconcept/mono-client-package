@@ -5,7 +5,10 @@ export enum EndPoints {
     AccountLinking = `/v2/accounts/initiate`,
     Customer = `/v2/customers`,
     InitiateMandate = `/v2/payments/initiate`,
-    Mandate = `/v3/payments/mandates`,
+    CreateMandate = `/v3/payments/mandates`,
+    Payment = `/v2/payments/initiate`,
+    InitiateOneTimePayment = `/v2/payments/initiate`,
+    VerifyOneTimePayment = `/v2/payments/verify`,
     VerifyMandateOTP = `/v3/payments/mandates/verify/otp`,
     Enrichment = `/v1/enrichments`,
     CashFlow = `/accounts`,
@@ -13,6 +16,8 @@ export enum EndPoints {
     TelcoOTP = `/v2/telecom/verify`,
     TelcoTokenExchange = `/account/auth`,
     TelcoAccount = `/account/auth`,
+    Payouts = `/v2/payments/payouts`,
+    PayoutsRefund = `/v2/payments/refund`,
 }
 
 export enum Status {
