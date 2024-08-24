@@ -10,61 +10,34 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Enum_1 = require("../lib/Enum");
+const customer_1 = require("./methods/customer");
+const connect_1 = require("./methods/connect");
 const MONO_BASE_URL = "https://api.withmono.com";
 class MonoClient {
     constructor(MONO_SECRET_KEY) {
-        this.customer = {
-            createCustomer: {
-                individual: (data) => __awaiter(this, void 0, void 0, function* () {
-                    return this.request(Enum_1.EndPoints.Customer, "POST", {
-                        data
-                    });
-                }),
-                business: (data) => __awaiter(this, void 0, void 0, function* () {
-                    return this.request(Enum_1.EndPoints.Customer, "POST", {
-                        data
-                    });
-                }),
-            },
-            getCustomer: (customer_id) => __awaiter(this, void 0, void 0, function* () {
-                return this.request(`${Enum_1.EndPoints.Customer}${customer_id}`);
-            }),
-            getAllCustomers: (...args_1) => __awaiter(this, [...args_1], void 0, function* (page = "", phone = "", email = "") {
-                const queryParams = new URLSearchParams({
-                    email,
-                    phone,
-                    page
-                });
-                return this.request(`${Enum_1.EndPoints.Customer}?${queryParams.toString()}`);
-            }),
-            getCustomerTransactions: (customer_id, period, page) => __awaiter(this, void 0, void 0, function* () {
-                if (!period || page)
-                    throw new Error("Required fields: period & page");
-                const queryParams = new URLSearchParams({
-                    period,
-                    page: String(page)
-                });
-                return this.request(`${Enum_1.EndPoints.Customer}/${customer_id}/transactions?${queryParams.toString()}`);
-            }),
-            getAllLinkedAccounts: (...args_1) => __awaiter(this, [...args_1], void 0, function* (page = "", account_number = "", name = "", institution = "") {
-                const queryParams = new URLSearchParams({
-                    name,
-                    institution,
-                    account_number,
-                    page,
-                });
-                return this.request(`${Enum_1.EndPoints.AccountDetails}?${queryParams.toString()}`);
-            }),
-            updateCustomer: (customer_id, body) => __awaiter(this, void 0, void 0, function* () {
-                return this.request(`${Enum_1.EndPoints.Customer}${customer_id}`, "PATCH", {
-                    data: body
-                });
-            }),
-            deleteCustomer: (customer_id) => __awaiter(this, void 0, void 0, function* () {
-                return this.request(`${Enum_1.EndPoints.Customer}${customer_id}`, "DELETE");
-            }),
-        };
         this.secretKey = MONO_SECRET_KEY;
+        this.connect = new connect_1.ConnectMethods(this.request.bind(this));
+        /**
+         * Initializes the `CustomerMethods` instance.
+         *
+         * This constructor binds the `request` method to the current context and passes it to the `CustomerMethods` class.
+         * The `CustomerMethods` class provides methods for interacting with the Mono API's customer-related endpoints.
+         *
+         * The `CustomerMethods` class allows you to:
+         * - Create new individual or business customers.
+         * - Retrieve customer details and lists.
+         * - Update and delete customer information.
+         * - Fetch customer transactions.
+         *
+         * For more information on the customer-related operations, refer to the [Mono API documentation](https://docs.mono.co/docs/customers).
+         *
+         * @example
+         * const client = new MonoClient('your-secret-key');
+         * const customerMethods = new CustomerMethods(client.request.bind(client));
+         *
+         * @type {CustomerMethods}
+         */
+        this.customer = new customer_1.CustomerMethods(this.request.bind(this));
     }
     request(endpoint_1) {
         return __awaiter(this, arguments, void 0, function* (endpoint, method = 'GET', body) {
@@ -82,6 +55,15 @@ class MonoClient {
             return response.json();
         });
     }
+    /**
+     * Retrieves a list of banks.
+     *
+     * This method sends a request to the Mono API to fetch a list of available banks. The response includes details about the banks that are supported by Mono.
+     *
+     * @returns A promise that resolves to a `BanksResponse` object containing the list of banks.
+     *
+     * @throws {Error} Throws an error if the request fails or if the response status is not OK.
+     */
     getBankList() {
         return __awaiter(this, void 0, void 0, function* () {
             return this.request(Enum_1.EndPoints.GetBankList);
