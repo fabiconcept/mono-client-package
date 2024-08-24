@@ -3,6 +3,7 @@ import { CreditWorthinessRequest } from "../../lib/interfaces/Request/Connect/Ac
 import { AccountLinkingRequest } from "../../lib/interfaces/Request/Connect/Authorization/accountLinking";
 import { AccountReauthorizationRequest } from "../../lib/interfaces/Request/Connect/Authorization/accountReauthorisation";
 import { ExchangeTokenRequest } from "../../lib/interfaces/Request/Connect/Authorization/exchangeToken";
+import { TransactionsRequest } from "../../lib/interfaces/Request/telco/transactions";
 import { AccountIdentityResponse, ExchangeTokenResponse } from "../../lib/interfaces/Responses";
 import { AccountDetailsResponse, AccountsResponse } from "../../lib/interfaces/Responses/Connect/Account/accounts";
 import { AccountBalanceResponse } from "../../lib/interfaces/Responses/Connect/Account/balance";
@@ -16,6 +17,11 @@ import { AccountReauthorizationResponse } from "../../lib/interfaces/Responses/C
 import { CategorisationRecordsResponse, CategorisationResponse, InsightRecordResponse, MetadataRecordsResponse, MetadataResponse, StatementInsightResponse } from "../../lib/interfaces/Responses/Data Enrichment";
 import { AssetResponse } from "../../lib/interfaces/Responses/investment/assets";
 import { EarningsResponse } from "../../lib/interfaces/Responses/investment/earnings";
+import { LoginResponse, OTPResponse, TokenExchangeResponse } from "../../lib/interfaces/Responses/telcon/auth";
+import { BalancesResponse } from "../../lib/interfaces/Responses/telcon/balance";
+import { DetailsResponse } from "../../lib/interfaces/Responses/telcon/details";
+import { TelcoIdentityResponse } from "../../lib/interfaces/Responses/telcon/identity";
+import { TelcoTransactionsResponse } from "../../lib/interfaces/Responses/telcon/transactions";
 
 export class ConnectMethods {
     constructor(private request: (endpoint: string, method?: string, body?: any) => Promise<any>) {}
@@ -23,7 +29,7 @@ export class ConnectMethods {
     /**
      * Contains methods for handling bank-related data operations.
      * 
-     * The `bankData` object provides methods for various banking and connectivity tasks, including:
+     * The `bank` object provides methods for various banking and connectivity tasks, including:
      * 
      * **Authorization**
      * - `accountLinking`: Link a new account.
@@ -72,7 +78,7 @@ export class ConnectMethods {
      * @property {object} dataEnrichment - Methods for enriching and analyzing transaction data.
      * @property {object} cashFlow - Methods for retrieving cash flow information.
      */
-    public bankData = {
+    public bank = {
         /**
          * Handles authorization-related operations.
          * 
@@ -422,6 +428,113 @@ export class ConnectMethods {
             getDebit: async (id: string): Promise<FlowResponse> => {
                 return this.request(`${EndPoints.CashFlow}/${id}/debits`);
             }
+        }
+    }
+
+    /**
+     * Provides methods for TelCo authentication and account management.
+     */
+    public telCo = {
+        /**
+         * Authentication methods for TelCo services.
+         */
+        authenticate: {
+             /**
+             * Logs in a TelCo user with their phone number and provider.
+             * @param {Object} data - The login data.
+             * @param {string} data.phone - The user's phone number.
+             * @param {string} data.provider - The TelCo provider (e.g., MTN, Airtel).
+             * @returns {Promise<LoginResponse>} The login response.
+             */
+            login: async(data: { phone: string, provider: string }): Promise<LoginResponse> => {
+                return this.request(EndPoints.TelcoLogin, "POST", {
+                    data
+                });
+            },
+            
+            /**
+             * Verifies an OTP sent to the user's phone during the login process.
+             * @param {Object} data - The OTP verification data.
+             * @param {string} data.otp - The OTP code received by the user.
+             * @returns {Promise<OTPResponse>} The OTP verification response.
+             */
+            otpVerification: async(data: { otp: string}): Promise<OTPResponse> =>{
+                return this.request(EndPoints.TelcoOTP, "POST", {
+                    data
+                });
+            },
+
+            /**
+             * Exchanges a code for a token, used for further authenticated requests.
+             * @param {Object} data - The token exchange data.
+             * @param {string} data.code - The code received during the authentication process.
+             * @returns {Promise<TokenExchangeResponse>} The token exchange response.
+             */
+            tokenExchange: async(data: { code: string}): Promise<TokenExchangeResponse> =>{
+                return this.request(EndPoints.TelcoTokenExchange, "POST", {
+                    data
+                });
+            }
+        },
+
+        /**
+         * Account management methods for TelCo services.
+         */
+        account: {
+            /**
+             * Retrieves details of a TelCo account by its ID.
+             * @param {string} id - The ID of the TelCo account.
+             * @returns {Promise<DetailsResponse>} The account details response.
+             */
+            getDetails: async (id: string): Promise<DetailsResponse> => {
+                return this.request(`${EndPoints.TelcoAccount}${id}`);
+            },
+            
+            /**
+             * Retrieves the balance of a TelCo account by its ID.
+             * @param {string} id - The ID of the TelCo account.
+             * @returns {Promise<BalancesResponse>} The account balances response.
+             */
+            getBalances: async (id: string): Promise<BalancesResponse> => {
+                return this.request(`${EndPoints.TelcoAccount}${id}/balances`);
+            },
+            
+            /**
+             * Retrieves transactions of a TelCo account by its ID with optional filters.
+             * @param {string} id - The ID of the TelCo account.
+             * @param {TransactionsRequest} requestParams - The transaction request parameters.
+             * @returns {Promise<TelcoTransactionsResponse>} The transactions response.
+             */
+            getTransactions: async (id: string, requestParams: TransactionsRequest): Promise<TelcoTransactionsResponse> => {
+                const searchParams = new URLSearchParams();
+                
+                searchParams.set("start", requestParams.start ?? "");
+                searchParams.set("end", requestParams.end ?? "");
+                
+                if (requestParams.narration) {
+                    searchParams.set("narration", requestParams.narration ?? "");
+                }
+                if (requestParams.type) {
+                    searchParams.set("type", requestParams.type ?? "");
+                }
+                if (requestParams.paginate) {
+                    searchParams.set("paginate", requestParams.paginate.toString() ?? "");
+                }
+                if (requestParams.limit) {
+                    searchParams.set("limit", requestParams.limit.toString() ?? "");
+                }
+                
+                return this.request(`${EndPoints.TelcoAccount}${id}/transactions`);
+            },
+            
+            /**
+             * Retrieves the identity information of a TelCo account by its ID.
+             * @param {string} id - The ID of the TelCo account.
+             * @returns {Promise<TelcoIdentityResponse>} The account identity response.
+             */
+            getIdentity: async (id: string): Promise<TelcoIdentityResponse> => {
+                return this.request(`${EndPoints.TelcoAccount}${id}//identity`);
+            },
         }
     }
 
