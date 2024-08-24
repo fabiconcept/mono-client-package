@@ -524,7 +524,7 @@ export class ConnectMethods {
                     searchParams.set("limit", requestParams.limit.toString() ?? "");
                 }
                 
-                return this.request(`${EndPoints.TelcoAccount}${id}/transactions`);
+                return this.request(`${EndPoints.TelcoAccount}${id}/transactions?${searchParams}`);
             },
             
             /**
