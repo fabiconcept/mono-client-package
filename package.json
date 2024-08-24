@@ -1,6 +1,6 @@
 {
   "name": "mono-client",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "\"This package provides streamlined access to all Mono API endpoints, making it simple and efficient for developers to integrate Mono's services into their applications. Whether you're managing financial data, processing transactions, or handling user accounts, this package ensures a smooth and hassle-free experience with the Mono API.\"",
   "main": "src/index.js",
   "scripts": {
