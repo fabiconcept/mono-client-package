@@ -381,7 +381,7 @@ export class ConnectMethods {
              * @returns {Promise<StatementInsightResponse>} The response containing statement insights.
              */
             getStatementInsight: async (id: string): Promise<StatementInsightResponse> => {
-                return this.request(`${EndPoints.Enrichment}${id}/statement-insights`);
+                return this.request(`${EndPoints.Enrichment}/${id}/statement-insights`);
             },
 
             /**
@@ -393,7 +393,7 @@ export class ConnectMethods {
              * @returns {Promise<InsightRecordResponse>} The response containing statement insight records.
              */
             getInsightRecords: async (id: string): Promise<InsightRecordResponse> => {
-                return this.request(`${EndPoints.Enrichment}${id}/statement-insights/records`);
+                return this.request(`${EndPoints.Enrichment}/${id}/statement-insights/records`);
             },
         },
 
@@ -487,7 +487,7 @@ export class ConnectMethods {
              * @returns {Promise<DetailsResponse>} The account details response.
              */
             getDetails: async (id: string): Promise<DetailsResponse> => {
-                return this.request(`${EndPoints.TelcoAccount}${id}`);
+                return this.request(`${EndPoints.TelcoAccount}/${id}`);
             },
             
             /**
@@ -496,7 +496,7 @@ export class ConnectMethods {
              * @returns {Promise<BalancesResponse>} The account balances response.
              */
             getBalances: async (id: string): Promise<BalancesResponse> => {
-                return this.request(`${EndPoints.TelcoAccount}${id}/balances`);
+                return this.request(`${EndPoints.TelcoAccount}/${id}/balances`);
             },
             
             /**
@@ -524,7 +524,7 @@ export class ConnectMethods {
                     searchParams.set("limit", requestParams.limit.toString() ?? "");
                 }
                 
-                return this.request(`${EndPoints.TelcoAccount}${id}/transactions?${searchParams}`);
+                return this.request(`${EndPoints.TelcoAccount}/${id}/transactions?${searchParams}`);
             },
             
             /**
@@ -533,7 +533,7 @@ export class ConnectMethods {
              * @returns {Promise<TelcoIdentityResponse>} The account identity response.
              */
             getIdentity: async (id: string): Promise<TelcoIdentityResponse> => {
-                return this.request(`${EndPoints.TelcoAccount}${id}//identity`);
+                return this.request(`${EndPoints.TelcoAccount}/${id}//identity`);
             },
         }
     }

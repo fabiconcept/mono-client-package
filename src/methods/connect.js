@@ -350,7 +350,7 @@ class ConnectMethods {
                  * @returns {Promise<StatementInsightResponse>} The response containing statement insights.
                  */
                 getStatementInsight: (id) => __awaiter(this, void 0, void 0, function* () {
-                    return this.request(`${Enum_1.EndPoints.Enrichment}${id}/statement-insights`);
+                    return this.request(`${Enum_1.EndPoints.Enrichment}/${id}/statement-insights`);
                 }),
                 /**
                  * Retrieves statement insight records for a specific account.
@@ -361,7 +361,7 @@ class ConnectMethods {
                  * @returns {Promise<InsightRecordResponse>} The response containing statement insight records.
                  */
                 getInsightRecords: (id) => __awaiter(this, void 0, void 0, function* () {
-                    return this.request(`${Enum_1.EndPoints.Enrichment}${id}/statement-insights/records`);
+                    return this.request(`${Enum_1.EndPoints.Enrichment}/${id}/statement-insights/records`);
                 }),
             },
             /**
@@ -449,7 +449,7 @@ class ConnectMethods {
                  * @returns {Promise<DetailsResponse>} The account details response.
                  */
                 getDetails: (id) => __awaiter(this, void 0, void 0, function* () {
-                    return this.request(`${Enum_1.EndPoints.TelcoAccount}${id}`);
+                    return this.request(`${Enum_1.EndPoints.TelcoAccount}/${id}`);
                 }),
                 /**
                  * Retrieves the balance of a TelCo account by its ID.
@@ -457,7 +457,7 @@ class ConnectMethods {
                  * @returns {Promise<BalancesResponse>} The account balances response.
                  */
                 getBalances: (id) => __awaiter(this, void 0, void 0, function* () {
-                    return this.request(`${Enum_1.EndPoints.TelcoAccount}${id}/balances`);
+                    return this.request(`${Enum_1.EndPoints.TelcoAccount}/${id}/balances`);
                 }),
                 /**
                  * Retrieves transactions of a TelCo account by its ID with optional filters.
@@ -482,7 +482,7 @@ class ConnectMethods {
                     if (requestParams.limit) {
                         searchParams.set("limit", (_f = requestParams.limit.toString()) !== null && _f !== void 0 ? _f : "");
                     }
-                    return this.request(`${Enum_1.EndPoints.TelcoAccount}${id}/transactions`);
+                    return this.request(`${Enum_1.EndPoints.TelcoAccount}/${id}/transactions`);
                 }),
                 /**
                  * Retrieves the identity information of a TelCo account by its ID.
@@ -490,7 +490,7 @@ class ConnectMethods {
                  * @returns {Promise<TelcoIdentityResponse>} The account identity response.
                  */
                 getIdentity: (id) => __awaiter(this, void 0, void 0, function* () {
-                    return this.request(`${Enum_1.EndPoints.TelcoAccount}${id}//identity`);
+                    return this.request(`${Enum_1.EndPoints.TelcoAccount}/${id}//identity`);
                 }),
             }
         };
