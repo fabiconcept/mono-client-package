@@ -55,6 +55,16 @@ export default class MonoClient {
         return this.request(EndPoints.GetBankList);
     }
 
+    /**
+     * Retrieves the coverage details for supported banks.
+     *
+     * This method makes an asynchronous request to fetch information on the banks
+     * that are covered by the service. The response includes details about the supported
+     * banks, their capabilities, and coverage areas.
+     *
+     * @returns {Promise<BankCoverageResponse>} A promise that resolves to the bank coverage details.
+     *
+     */
     async getBankCoverage(): Promise<BankCoverageResponse> {
         return this.request(EndPoints.GetBankCoverage);
     }
