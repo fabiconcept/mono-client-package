@@ -1,5 +1,6 @@
 export enum EndPoints {
     GetBankList = `/v3/banks/list`,
+    GetBankCoverage = `/v3/institutions`,
     ExchangeToken = "/v2/accounts/auth",
     AccountDetails = `/v2/accounts`,
     AccountLinking = `/v2/accounts/initiate`,
@@ -18,6 +19,8 @@ export enum EndPoints {
     TelcoAccount = `/account/auth`,
     Payouts = `/v2/payments/payouts`,
     PayoutsRefund = `/v2/payments/refund`,
+    BVN = `/v2/lookup/bvn`,
+    cacLookUp = `/v3/lookup`,
 }
 
 export enum Status {
