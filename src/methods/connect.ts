@@ -24,7 +24,7 @@ import { TelcoIdentityResponse } from "../../lib/interfaces/Responses/telcon/ide
 import { TelcoTransactionsResponse } from "../../lib/interfaces/Responses/telcon/transactions";
 
 export class ConnectMethods {
-    constructor(private request: (endpoint: string, method?: string, body?: any) => Promise<any>) {}
+    constructor(private request: (endpoint: string, method?: string, body?: any, moreHeaders?: { [key: string]: string }) => Promise<any>) { };
 
     /**
      * Contains methods for handling bank-related data operations.
@@ -456,11 +456,16 @@ export class ConnectMethods {
              * Verifies an OTP sent to the user's phone during the login process.
              * @param {Object} data - The OTP verification data.
              * @param {string} data.otp - The OTP code received by the user.
+             * @param {string} data.session_id - The session_id is a part of the response from authenticate.login.
              * @returns {Promise<OTPResponse>} The OTP verification response.
              */
-            otpVerification: async(data: { otp: string}): Promise<OTPResponse> =>{
+            otpVerification: async(data: { otp: string, session_id: string}): Promise<OTPResponse> =>{
                 return this.request(EndPoints.TelcoOTP, "POST", {
-                    data
+                    data: {
+                        otp: data.otp
+                    }
+                },{
+                    "x-session-id": data.session_id
                 });
             },
 
