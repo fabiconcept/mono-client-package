@@ -3,6 +3,7 @@ import { CustomerMethods } from "./methods/customer";
 import { ConnectMethods } from "./methods/connect";
 import { BanksResponse } from "../lib/interfaces/Responses";
 import { DirectPayMethods } from "./methods/directPay";
+import { LookUpMethods } from "./methods/lookUp";
 
 const MONO_BASE_URL = "https://api.withmono.com";
 
@@ -11,6 +12,7 @@ export default class MonoClient {
     public customer: CustomerMethods;
     public connect: ConnectMethods;
     public directPay: DirectPayMethods;
+    public lookUp: LookUpMethods;
 
     constructor(MONO_SECRET_KEY: string) {
         this.secretKey = MONO_SECRET_KEY;
@@ -18,15 +20,17 @@ export default class MonoClient {
         this.connect = new ConnectMethods(this.request.bind(this));
         this.customer = new CustomerMethods(this.request.bind(this));
         this.directPay = new DirectPayMethods(this.request.bind(this));
+        this.lookUp = new LookUpMethods(this.request.bind(this));
 
     }
 
-    private async request(endpoint: string, method: string = 'GET', body?: any) {
+    private async request(endpoint: string, method: string = 'GET', body?: any, moreHeaders: { [key: string]: string } = {}) {
         const response = await fetch(`${MONO_BASE_URL}${endpoint}`, {
             method,
             headers: {
                 'mono-sec-key': `${this.secretKey}`,
                 'Content-Type': 'application/json',
+                ...moreHeaders,
             },
             body: body ? JSON.stringify(body) : undefined,
         });
