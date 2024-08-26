@@ -154,3 +154,34 @@ export interface MandateResponse {
         amount: number;
     };
 }
+
+export interface BankCoverageResponse {
+    status: string;
+    message: string;
+    timestamp: string;
+    data: BankCoverage[];
+}
+
+interface BankCoverage {
+    id: string;
+    institution: string;
+    type: string;
+    nip_code: string;
+    bank_code: string;
+    country: string;
+    auth_methods: AuthMethod[];
+    scope: Scope[];
+}
+
+interface AuthMethod {
+    _id: string;
+    type: string;
+    name: string;
+    identifier: string;
+}
+
+interface Scope {
+    name: string;
+    type: string;
+}
+  

@@ -1,7 +1,7 @@
 import { EndPoints } from "../lib/Enum";
 import { CustomerMethods } from "./methods/customer";
 import { ConnectMethods } from "./methods/connect";
-import { BanksResponse } from "../lib/interfaces/Responses";
+import { BankCoverageResponse, BanksResponse } from "../lib/interfaces/Responses";
 import { DirectPayMethods } from "./methods/directPay";
 import { LookUpMethods } from "./methods/lookUp";
 
@@ -53,5 +53,9 @@ export default class MonoClient {
      */
     async getBankList(): Promise<BanksResponse> {
         return this.request(EndPoints.GetBankList);
+    }
+
+    async getBankCoverage(): Promise<BankCoverageResponse> {
+        return this.request(EndPoints.GetBankCoverage);
     }
 }
