@@ -13,6 +13,7 @@ const Enum_1 = require("../lib/Enum");
 const customer_1 = require("./methods/customer");
 const connect_1 = require("./methods/connect");
 const directPay_1 = require("./methods/directPay");
+const lookUp_1 = require("./methods/lookUp");
 const MONO_BASE_URL = "https://api.withmono.com";
 class MonoClient {
     constructor(MONO_SECRET_KEY) {
@@ -20,15 +21,13 @@ class MonoClient {
         this.connect = new connect_1.ConnectMethods(this.request.bind(this));
         this.customer = new customer_1.CustomerMethods(this.request.bind(this));
         this.directPay = new directPay_1.DirectPayMethods(this.request.bind(this));
+        this.lookUp = new lookUp_1.LookUpMethods(this.request.bind(this));
     }
     request(endpoint_1) {
-        return __awaiter(this, arguments, void 0, function* (endpoint, method = 'GET', body) {
+        return __awaiter(this, arguments, void 0, function* (endpoint, method = 'GET', body, moreHeaders = {}) {
             const response = yield fetch(`${MONO_BASE_URL}${endpoint}`, {
                 method,
-                headers: {
-                    'mono-sec-key': `${this.secretKey}`,
-                    'Content-Type': 'application/json',
-                },
+                headers: Object.assign({ 'mono-sec-key': `${this.secretKey}`, 'Content-Type': 'application/json' }, moreHeaders),
                 body: body ? JSON.stringify(body) : undefined,
             });
             if (!response.ok) {
@@ -49,6 +48,11 @@ class MonoClient {
     getBankList() {
         return __awaiter(this, void 0, void 0, function* () {
             return this.request(Enum_1.EndPoints.GetBankList);
+        });
+    }
+    getBankCoverage() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return this.request(Enum_1.EndPoints.GetBankCoverage);
         });
     }
 }

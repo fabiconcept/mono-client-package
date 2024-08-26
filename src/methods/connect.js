@@ -420,11 +420,16 @@ class ConnectMethods {
                  * Verifies an OTP sent to the user's phone during the login process.
                  * @param {Object} data - The OTP verification data.
                  * @param {string} data.otp - The OTP code received by the user.
+                 * @param {string} data.session_id - The session_id is a part of the response from authenticate.login.
                  * @returns {Promise<OTPResponse>} The OTP verification response.
                  */
                 otpVerification: (data) => __awaiter(this, void 0, void 0, function* () {
                     return this.request(Enum_1.EndPoints.TelcoOTP, "POST", {
-                        data
+                        data: {
+                            otp: data.otp
+                        }
+                    }, {
+                        "x-session-id": data.session_id
                     });
                 }),
                 /**
@@ -495,5 +500,6 @@ class ConnectMethods {
             }
         };
     }
+    ;
 }
 exports.ConnectMethods = ConnectMethods;
