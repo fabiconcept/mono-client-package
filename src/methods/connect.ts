@@ -5,6 +5,7 @@ import { AccountReauthorizationRequest } from "../../lib/interfaces/Request/Conn
 import { ExchangeTokenRequest } from "../../lib/interfaces/Request/Connect/Authorization/exchangeToken";
 import { TransactionsRequest } from "../../lib/interfaces/Request/telco/transactions";
 import { AccountIdentityResponse, ExchangeTokenResponse } from "../../lib/interfaces/Responses";
+import { FlowResponse } from "../../lib/interfaces/Responses/CashFlow";
 import { AccountDetailsResponse, AccountsResponse } from "../../lib/interfaces/Responses/Connect/Account/accounts";
 import { AccountBalanceResponse } from "../../lib/interfaces/Responses/Connect/Account/balance";
 import { CreditWorthinessResponse } from "../../lib/interfaces/Responses/Connect/Account/creditworthiness";

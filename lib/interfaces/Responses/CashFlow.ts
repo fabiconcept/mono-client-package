@@ -4,7 +4,7 @@ interface HistoryItem {
     transactions_count: number;
 }
 
-interface FlowResponse {
+export interface FlowResponse {
     total: number;
     transactions_count: number;
     history: HistoryItem[];
